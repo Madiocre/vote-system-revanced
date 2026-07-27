@@ -1,0 +1,14 @@
+{
+  "name": "server",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  },
+  "dependencies": {
+    "hono": "^4.12.32",
+    "@vote-system-revanced/shared": "workspace:*",
+    "@vote-system-revanced/db": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}

@@ -1,0 +1,189 @@
+.card {
+  width: 17em;
+  height: 22.5em;
+  background: #171717;
+  transition: all 0.3s ease-in-out;
+  clip-path: polygon(
+    30px 0%,
+    100% 0,
+    100% calc(100% - 30px),
+    calc(100% - 30px) 100%,
+    0 100%,
+    0% 30px
+  );
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.card .img {
+  width: 8.8em;
+  height: 8.8em;
+  background: #000;
+  border-radius: 19px;
+  margin: 1.5em auto;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover .img {
+  transform: scale(1.05);
+}
+
+.card .img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card span {
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  display: block;
+  font-size: 1.2em;
+  margin-bottom: 0.5em;
+}
+
+.card .info {
+  font-weight: 400;
+  color: #a1a1aa;
+  display: block;
+  text-align: center;
+  font-size: 0.72em;
+  margin: 0 1em;
+  line-height: 1.4;
+}
+
+.card .share {
+  margin-top: auto;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.card a {
+  color: white;
+  transition: 0.4s ease-in-out;
+  text-decoration: none;
+}
+
+.card a:hover {
+  color: #ef4444;
+}
+
+.card button {
+  padding: 0.8em 1.7em;
+  display: block;
+  margin: 1em auto;
+  border-radius: 25px;
+  border: none;
+  font-weight: bold;
+  background: #ffffff;
+  color: #000;
+  transition: 0.4s ease-in-out;
+  cursor: pointer;
+}
+
+.card button:hover {
+  background: #ef4444;
+  color: white;
+}
+
+/* Responsive grid layout */
+.card-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(17em, 1fr));
+  padding: 1.5rem;
+  justify-items: center; /* Center cards in their grid cells */
+}
+
+/* Media Queries for scaling from 5 to 1 */
+@media (min-width: 380px) {
+  .card-grid {
+    grid-template-columns: repeat(1, 17em);
+    justify-content: center;
+  }
+}
+
+@media (min-width: 600px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 17em);
+  }
+}
+
+@media (min-width: 900px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 17em);
+  }
+}
+
+@media (min-width: 1200px) {
+  .card-grid {
+    grid-template-columns: repeat(4, 17em);
+  }
+}
+
+@media (min-width: 1500px) {
+  .card-grid {
+    grid-template-columns: repeat(5, 17em);
+  }
+}
+
+.results-section {
+  justify-content: center;
+  margin: auto;
+}
+.results-grid {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 90%;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.result-card {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.progress-bar-bg {
+  background-color: #e0e0e0;
+  height: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  background-color: #4caf50;
+  height: 100%;
+  transition: width 0.5s ease-in-out;
+}
+
+.total-votes {
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: right;
+}
