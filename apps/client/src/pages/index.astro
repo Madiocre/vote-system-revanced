@@ -1,11 +1,40 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+export const prerender = false; // must run per-request to read the vote cookie
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import ErrorBoundary from "../components/ErrorBoundary";
+import VotingWidget from "../components/VoteWidget";
+import { voteOptions } from "../data/voteOptions"; // same shape as old VoteeData.ts
+
+const hasVoted = Astro.cookies.has("voted");
 ---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Vote</title>
+    <link rel="stylesheet" href="/styles/card.css" />
+    <link rel="stylesheet" href="/styles/background.css" />
+  </head>
+  <body>
+    <div class="background-container">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <div class={`background-line background-line-${i + 1}`} />
+      ))}
+    </div>
 
-<Layout>
-	<Welcome />
-</Layout>
+    <div class="logo-container">
+      <img class="logo" src="/images/thebest.png" width="300" height="300" alt="Logo" />
+    </div>
+
+	<ErrorBoundary client:load>
+  		<VotingWidget client:load options={voteOptions} initialHasVoted={hasVoted} />
+	</ErrorBoundary>
+    <footer>
+      <div class="footer-bottom">
+        <ul id="footer-social-links">
+          <li><a href="https://github.com/Madiocre" target="_blank">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/ahmed-shalaby-31a03a235/" target="_blank">LinkedIn</a></li>
+        </ul>
+      </div>
+    </footer>
+  </body>
+</html>

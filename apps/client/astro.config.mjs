@@ -1,9 +1,15 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
 
-import react from '@astrojs/react';
 
-// https://astro.build/config
+import cloudflare from "@astrojs/cloudflare";
+
+
 export default defineConfig({
-  integrations: [react()]
+  integrations: [react()],
+
+  // static mode would make Astro.cookies a no-op — easy to miss
+  output: "server",
+
+  adapter: cloudflare()
 });

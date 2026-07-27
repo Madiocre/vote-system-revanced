@@ -1,0 +1,11 @@
+.background-line {
+  animation: drift 12s ease-in-out infinite alternate;
+}
+.background-line:nth-child(3n)   { animation-duration: 15s; animation-delay: -3s; }
+.background-line:nth-child(3n+1) { animation-duration: 9s;  animation-delay: -6s; }
+.background-line:nth-child(5n)   { animation-duration: 18s; animation-delay: -1s; }
+
+@keyframes drift {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(180deg); }
+}
