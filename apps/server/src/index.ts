@@ -5,11 +5,12 @@ import { candidatesRoute } from "./routes/candidates";
 import { recomputeResults } from "./cron/recompute-results";
 import { cors } from "hono/cors";
 const app = new Hono<{ Bindings: Env }>();
+
+app.use("/api/*", cors({ origin: ["http://localhost:4321"], credentials: true }));
+
 app.route("/", voteRoute);
 app.route("/", resultsRoute);
 app.route("/", candidatesRoute);
-
-app.use("/api/*", cors({ origin: ["http://localhost:4321"], credentials: true }));
 
 export { app };
 
