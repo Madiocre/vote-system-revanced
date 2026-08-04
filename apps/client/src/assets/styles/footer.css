@@ -1,0 +1,128 @@
+.w-f {
+  width: 100%;
+}
+
+.w-sub-1 {
+  width: 100%;
+  background-color: #374151; /* Tailwind's gray-700 */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .w-sub-1 {
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.w-sub-2 {
+  margin-top: 1rem;
+  > :not([hidden]) ~ :not([hidden]) {
+    margin-left: 1.5rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .w-sub-2 {
+    margin-top: 0;
+    justify-content: center;
+  }
+}
+
+footer{
+  background-color: #000; 
+  min-width: 400px; 
+  width: 100%; 
+  text-align: center; 
+  line-height: 35px; 
+  height: 35px; 
+  color: #ccc;
+}
+.footer-bottom-site-credit{
+  padding-right: 10px;
+}
+span#site-credit a{
+  color: #3399fe; 
+  font-size: 75%;
+}
+span#site-credit a:hover{
+  text-decoration: underline;
+}
+a{
+  text-decoration: none; 
+  color: #fff;
+}
+a:hover{
+  color: #3399fe;
+}
+ @media only screen and (max-width: 480px) {
+    .footer-bottom-copyright-text{
+      font-size: 80%;
+    }
+   .footer-bottom-social-icons{
+     font-size: 80%;
+   }
+}
+
+@media only screen and (max-width: 960px) {
+  .footer-bottom{
+    text-align: center;
+  }
+  .footer-bottom-copyright-text{
+    width: 100%;
+  }
+  .footer-bottom-social-icons{
+    background-color: #000;
+  }
+  .footer-bottom-site-credit{
+    padding-right: 0px;
+  }
+  #footer-social-links li{
+    list-style: none; 
+    display: inline-block; 
+    padding: 0px 10px;
+  }
+}
+
+@media only screen and (min-width: 961px) {
+  .footer-bottom{text-align: left;
+  }
+  .footer-bottom-copyright-text{
+    max-width: 480px; 
+    float: left; 
+    padding: 10px 10px 0px 10px; 
+    line-height: 60px; 
+    height: 60px;
+  }
+  .footer-bottom-social-icons{
+    background-color: #000; 
+    text-align: right; 
+    padding: 0px 10px;
+  }
+    #footer-social-links li{
+      list-style: none; 
+      display: inline-block; 
+      padding: 15px 10px 0px 10px;
+  }
+}
+
+.thanks-message {
+  background-color: #f0f8ff; /* Light blue background */
+  color: #2c3e50; /* Darker text color for contrast */
+  font-size: 1.5rem; /* Increase font size */
+  font-weight: bold; /* Make text bold */
+  padding: 20px; /* Add some padding */
+  border-radius: 8px; /* Rounded corners */
+  text-align: center; /* Center the text */
+  margin: 20px 0; /* Add space above and below */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition effects */
+}
+
+.thanks-message:hover {
+  background-color: #e1f5fe; /* Change background on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}

@@ -1,0 +1,50 @@
+/* Background Styles */
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+  }
+  
+  .background-line {
+    position: absolute;
+    background: linear-gradient(to right, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.3));
+    height: 3px;
+    width: 150%;
+    left: -25%;
+    animation: floatLine 15s linear infinite;
+  }
+  
+  @keyframes floatLine {
+    0% {
+      transform: translateY(-100%) rotate(0deg);
+    }
+    100% {
+      transform: translateY(100vh) rotate(360deg);
+    }
+  }
+  
+  /* Create 20 lines with different rotations and animation durations */
+  .background-line:nth-child(1) { top: 5%; animation-duration: 15s; }
+  .background-line:nth-child(2) { top: 10%; animation-duration: 20s; }
+  .background-line:nth-child(3) { top: 15%; animation-duration: 18s; }
+  .background-line:nth-child(4) { top: 20%; animation-duration: 22s; }
+  .background-line:nth-child(5) { top: 25%; animation-duration: 19s; }
+  .background-line:nth-child(6) { top: 30%; animation-duration: 21s; }
+  .background-line:nth-child(7) { top: 35%; animation-duration: 17s; }
+  .background-line:nth-child(8) { top: 40%; animation-duration: 23s; }
+  .background-line:nth-child(9) { top: 45%; animation-duration: 16s; }
+  .background-line:nth-child(10) { top: 50%; animation-duration: 24s; }
+  .background-line:nth-child(11) { top: 55%; animation-duration: 18s; }
+  .background-line:nth-child(12) { top: 60%; animation-duration: 20s; }
+  .background-line:nth-child(13) { top: 65%; animation-duration: 22s; }
+  .background-line:nth-child(14) { top: 70%; animation-duration: 19s; }
+  .background-line:nth-child(15) { top: 75%; animation-duration: 21s; }
+  .background-line:nth-child(16) { top: 80%; animation-duration: 17s; }
+  .background-line:nth-child(17) { top: 85%; animation-duration: 23s; }
+  .background-line:nth-child(18) { top: 90%; animation-duration: 16s; }
+  .background-line:nth-child(19) { top: 95%; animation-duration: 24s; }
+  .background-line:nth-child(20) { top: 100%; animation-duration: 18s; }

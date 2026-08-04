@@ -1,8 +1,49 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "vote-system-server",
-  "main": "src/index.ts",
-  "compatibility_date": "2026-07-24",
-  "compatibility_flags": ["nodejs_compat"],
-  "triggers": { "crons": ["*/5 * * * *"] }
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "vote-system-server",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-07-24",
+	"vars": {
+		"ELECTION_ID": "test-election"
+	},
+	"triggers": {
+		"crons": [
+			"*/5 * * * *"
+		]
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "vote-system-db",
+			"database_id": "3b3af53e-1172-4e6c-ab01-39afa1e8260d",
+			"migrations_dir": "../../packages/db/migrations",
+		},
+		// {
+		// 	"binding": "vote_system_db",
+		// 	"database_name": "vote-system-db",
+		// 	"database_id": "3b3af53e-1172-4e6c-ab01-39afa1e8260d"
+		// }-
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "VOTE_GATE",
+				"class_name": "VoteGate"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"VoteGate"
+			]
+		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "RESULTS_CACHE",
+			"id": "ea14c19126f04916ac5bf78001e5f89b"
+		}
+	]
 }

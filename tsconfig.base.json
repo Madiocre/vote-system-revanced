@@ -27,7 +27,7 @@
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
     
-    
+    // Additional consistenct flags
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true

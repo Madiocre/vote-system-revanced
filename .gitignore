@@ -32,3 +32,25 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # Finder (MacOS) folder config
 .DS_Store
+
+# Wrangler local state & secrets
+.wrangler
+.dev.vars
+.dev.vars.*
+
+# env files (in case any package reaches for dotenv directly)
+.env
+.env.local
+.env.*.local
+
+# build output
+dist
+.astro
+
+# stray local db files if you ever export/copy one out of .wrangler for inspection
+*.sqlite
+*.sqlite3
+
+# OS/editor noise
+.DS_Store
+*.log

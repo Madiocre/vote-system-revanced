@@ -1,5 +1,5 @@
 export async function hashVoterIdentity(ip: string, secret: string): Promise<string> {
-  // TODO (you): is IP alone enough, or do you fold in anything else here?
+  // TODO: is IP alone enough, or do you fold in anything else here?
   // Whatever goes in, it needs to be something the DO/D1 can key on
   // consistently for the SAME voter across requests, and NOT something
   // that changes per-request (e.g. don't include a timestamp or the

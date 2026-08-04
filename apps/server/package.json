@@ -10,6 +10,7 @@
     "@vote-system-revanced/db": "workspace:*"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "wrangler": "^4.115.0"
   }
 }

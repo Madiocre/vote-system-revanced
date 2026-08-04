@@ -1,18 +1,29 @@
 ---
-export const prerender = false; // must run per-request to read the vote cookie
+// apps/client/src/pages/index.astro
+export const prerender = false; // must run per-request to read the vote cookie and hit the service binding
 
 import ErrorBoundary from "../components/ErrorBoundary";
 import VotingWidget from "../components/VoteWidget";
-import { voteOptions } from "../data/voteOptions"; // same shape as old VoteeData.ts
+import AdvertCard from "../components/AdvertCard";
+import type { Candidate } from "../../../../packages/shared/candidate";
 
+import "../assets/styles/card.css";
+import "../assets/styles/mainpage.css";
+import "../assets/styles/footer.css";
+import "../assets/styles/navbar.css";
+
+const apiUrl = import.meta.env.PUBLIC_API_URL ?? "http://localhost:8787";
+const res = await fetch(`${apiUrl}/api/candidates`);
+const candidates: Candidate[] = res.ok ? await res.json() : [];
 const hasVoted = Astro.cookies.has("voted");
 ---
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Vote</title>
     <link rel="stylesheet" href="/styles/card.css" />
-    <link rel="stylesheet" href="/styles/background.css" />
+    <link rel="stylesheet" href="/styles/mainpage.css" />
   </head>
   <body>
     <div class="background-container">
@@ -23,11 +34,13 @@ const hasVoted = Astro.cookies.has("voted");
 
     <div class="logo-container">
       <img class="logo" src="/images/thebest.png" width="300" height="300" alt="Logo" />
+      <AdvertCard client:load />
     </div>
 
-	<ErrorBoundary client:load>
-  		<VotingWidget client:load options={voteOptions} initialHasVoted={hasVoted} />
-	</ErrorBoundary>
+    <ErrorBoundary client:load>
+      <VotingWidget client:load candidates={candidates} initialHasVoted={hasVoted} apiUrl={apiUrl} />
+    </ErrorBoundary>
+
     <footer>
       <div class="footer-bottom">
         <ul id="footer-social-links">

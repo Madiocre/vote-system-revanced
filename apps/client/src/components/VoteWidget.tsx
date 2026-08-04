@@ -1,36 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import VoteCard from "./VoteCard";
+import type { Candidate } from "../../../../packages/shared/candidate";
 
-type VoteOption = {
-  name: string;
-  description: string;
-  imageSrc: string;
-  youtubeLink?: string;
-  facebookLink?: string;
-};
-type VoteResult = { option: string; count: number };
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (selector: string, opts: { sitekey: string; callback: (token: string) => void }) => void;
+    };
+  }
+}
+
+type CandidateResult = { candidateId: string; name: string; count: number };
+type ResultsResponse = { updatedAt: number | null; results: CandidateResult[] };
 type Tab = "vote" | "results";
 
 export default function VotingWidget({
-  options,
+  candidates,
   initialHasVoted,
+  apiUrl,
 }: {
-  options: VoteOption[];
+  candidates: Candidate[];
   initialHasVoted: boolean;
+  apiUrl: string;
 }) {
   const [tab, setTab] = useState<Tab>("vote");
   const [hasVoted, setHasVoted] = useState(initialHasVoted);
-  const [results, setResults] = useState<VoteResult[] | null>(null);
+  const [results, setResults] = useState<CandidateResult[] | null>(null);
   const [loadingResults, setLoadingResults] = useState(false);
   const [message, setMessage] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   const showResults = async () => {
     setTab("results");
-    if (results) return; // already have it for this page view
+    if (results) return;
     setLoadingResults(true);
     try {
       const res = await fetch("/api/results");
-      setResults(await res.json());
+      const data: ResultsResponse = await res.json();
+      setResults(data.results);
     } catch {
       setMessage("Couldn't load results, try again in a moment.");
     } finally {
@@ -38,14 +45,32 @@ export default function VotingWidget({
     }
   };
 
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+    script.async = true;
+    script.onload = () => {
+      window.turnstile?.render("#turnstile-widget", {
+        sitekey: "1x00000000000000000000AA", // Cloudflare's public test key — always passes
+        callback: (token) => setTurnstileToken(token),
+      });
+    };
+    document.body.appendChild(script);
+    return () => { document.body.removeChild(script); };
+  }, []);
+
   const handleVote = async (candidateId: string) => {
+    if (!turnstileToken) {
+      setMessage("Please complete the verification check first.");
+      return;
+    }
     setMessage("");
     try {
-      // TODO (you): wire real Turnstile token in here, not a placeholder
-      const res = await fetch(`/api/vote/${candidateId}`, {
+      const res = await fetch(`${apiUrl}/api/vote/${candidateId}`, {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ turnstileToken: "TODO" }),
+        body: JSON.stringify({ turnstileToken }),
       });
       if (res.ok) {
         setHasVoted(true);
@@ -63,6 +88,7 @@ export default function VotingWidget({
 
   return (
     <div className="voting-widget">
+      <div id="turnstile-widget" />
       <nav className="navbar">
         <button className={tab === "vote" ? "active" : ""} onClick={() => setTab("vote")}>
           Vote
@@ -79,8 +105,16 @@ export default function VotingWidget({
           <p className="thanks-message">You have already voted. Thanks for participating! 🎉</p>
         ) : (
           <div className="card-grid">
-            {options.map((option) => (
-              <VoteCard key={option.name} {...option} onClick={() => handleVote(option.name)} />
+            {candidates.map((candidate) => (
+              <VoteCard
+                key={candidate.id}
+                imageSrc={candidate.imageSrc ?? ""}
+                name={candidate.name}
+                description={candidate.description ?? ""}
+                youtubeLink={candidate.youtubeLink ?? undefined}
+                facebookLink={candidate.facebookLink ?? undefined}
+                onClick={() => handleVote(candidate.id)}
+              />
             ))}
           </div>
         )
@@ -93,7 +127,7 @@ export default function VotingWidget({
   );
 }
 
-function ResultsPanel({ results }: { results: VoteResult[] }) {
+function ResultsPanel({ results }: { results: CandidateResult[] }) {
   const sorted = [...results].sort((a, b) => b.count - a.count);
   const max = Math.max(...sorted.map((r) => r.count), 1);
   const total = sorted.reduce((sum, r) => sum + r.count, 0);
@@ -101,9 +135,9 @@ function ResultsPanel({ results }: { results: VoteResult[] }) {
   return (
     <div className="results-grid">
       {sorted.map((r) => (
-        <div key={r.option} className="result-card">
+        <div key={r.candidateId} className="result-card">
           <div className="result-header">
-            <span>{r.option}</span>
+            <span>{r.name}</span>
             <span>{r.count}</span>
           </div>
           <div className="progress-bar-bg">
