@@ -6,7 +6,7 @@ import { recomputeResults } from "./cron/recompute-results";
 import { cors } from "hono/cors";
 const app = new Hono<{ Bindings: Env }>();
 
-app.use("/api/*", cors({ origin: ["http://localhost:4321"], credentials: true }));
+app.use("/api/*", cors({ origin: ["http://localhost:4321", "https://vote-system-client.wolvirex.workers.dev"], credentials: true }));
 
 app.route("/", voteRoute);
 app.route("/", resultsRoute);

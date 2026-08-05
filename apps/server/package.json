@@ -2,7 +2,8 @@
   "name": "server",
   "scripts": {
     "types": "wrangler types",
-    "dev": "wrangler dev"
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "hono": "^4.12.32",

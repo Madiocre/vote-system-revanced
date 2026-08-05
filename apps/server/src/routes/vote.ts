@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { setCookie } from "hono/cookie";
+// import { setCookie } from "hono/cookie";
 import { verifyTurnstile } from "../lib/turnstile";
 import { hashVoterIdentity } from "../lib/voter-hash";
 
@@ -46,12 +46,12 @@ voteRoute.post("/api/vote/:candidateId", async (c) => {
     return c.json({ error: "vote_not_recorded" }, 500);
   }
 
-  setCookie(c, "voted", "1", {
-    httpOnly: true,
-    sameSite: "Strict",
-    secure: true,
-    maxAge: 60 * 60 * 24 * 30,
-  });
+  // setCookie(c, "voted", "1", {
+  //   httpOnly: true,
+  //   sameSite: "Strict",
+  //   secure: true,
+  //   maxAge: 60 * 60 * 24 * 30,
+  // });
 
   return c.json({ ok: true });
 });

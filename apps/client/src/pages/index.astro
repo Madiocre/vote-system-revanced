@@ -4,7 +4,7 @@ export const prerender = false; // must run per-request to read the vote cookie 
 
 import ErrorBoundary from "../components/ErrorBoundary";
 import VotingWidget from "../components/VoteWidget";
-import AdvertCard from "../components/AdvertCard";
+// import AdvertCard from "../components/AdvertCard";
 import type { Candidate } from "../../../../packages/shared/candidate";
 
 import "../assets/styles/card.css";
@@ -22,8 +22,6 @@ const hasVoted = Astro.cookies.has("voted");
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Vote</title>
-    <link rel="stylesheet" href="/styles/card.css" />
-    <link rel="stylesheet" href="/styles/mainpage.css" />
   </head>
   <body>
     <div class="background-container">
@@ -32,10 +30,10 @@ const hasVoted = Astro.cookies.has("voted");
       ))}
     </div>
 
-    <div class="logo-container">
+    <!-- <div class="logo-container">
       <img class="logo" src="/images/thebest.png" width="300" height="300" alt="Logo" />
-      <AdvertCard client:load />
-    </div>
+      {/* <AdvertCard client:load /> */}
+    </div> -->
 
     <ErrorBoundary client:load>
       <VotingWidget client:load candidates={candidates} initialHasVoted={hasVoted} apiUrl={apiUrl} />

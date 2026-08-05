@@ -35,7 +35,7 @@ export default function VotingWidget({
     if (results) return;
     setLoadingResults(true);
     try {
-      const res = await fetch("/api/results");
+      const res = await fetch(`${apiUrl}/api/results`);
       const data: ResultsResponse = await res.json();
       setResults(data.results);
     } catch {
@@ -73,13 +73,15 @@ export default function VotingWidget({
         body: JSON.stringify({ turnstileToken }),
       });
       if (res.ok) {
+        document.cookie = "voted=1; path=/; max-age=2592000; samesite=strict";
         setHasVoted(true);
         setMessage("Thanks for voting! 🎉");
       } else if (res.status === 409) {
+        document.cookie = "voted=1; path=/; max-age=2592000; samesite=strict";
         setHasVoted(true);
-        setMessage("Looks like you've already voted.");
+        setMessage("Looks like you've already voted. 🎉");
       } else {
-        setMessage("Vote didn't go through, try again.");
+        setMessage("Vote didn't go through, try again. 😞");
       }
     } catch {
       setMessage("Network error casting vote.");
